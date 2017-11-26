@@ -1,0 +1,251 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="OperatorMaster.master.cs" Inherits="RTP.TESWebServer.OperatorMaster" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="myApp">
+<head runat="server">
+
+    <title></title>
+    <script src="js/jquery-1.11.3.min.js"></script>
+<%--    <script src="js/plugin/jquery.userTimeout.js"></script>--%>
+    <script src="js/custom/custom.js"></script>
+    <script src="js/angular1.4.min.js"></script>
+    <script src="js/plugin/angular-idle.min.js"></script>
+    <script src="js/custom/app.js"></script>
+    <link href="css/alertify.bootstrap_1.1.css" rel="stylesheet" />
+    <script src="js/alertify_1.0.js"></script>
+    <script src="js/custom/app.js"></script>
+    <script src="js/custom/availability.js"></script>
+    <script src="js/highcharts.js"></script>
+    <script src="js/exporting.js"></script>
+    <script src="js/custom/factory.js"></script>
+    <script src="js/custom/service.js"></script>
+    <script src="js/custom/controller.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <script src="js/bootstrap.min.js"></script>
+    <link href="css/font-awesome.css" rel="stylesheet" />
+    <link href="css/homeStyle.css" rel="stylesheet" />
+
+
+    <style>
+        .txtMain {
+            font-size: 0.9em;
+        }
+
+        .smallText {
+            font-size: 0.8em;
+        }
+    </style>
+
+    <style type="text/css">
+        .floatLeft {
+            float: left;
+            margin-left: 2px;
+        }
+
+        #txtbox {
+            width: 60px;
+        }
+
+        .tbl {
+            width: 100%;
+        }
+
+        .highcharts-plot-background {
+            border: 1px solid black !important;
+        }
+
+        .boxClass {
+            width: 0.41%;
+            border: 1px solid black;
+            margin: 0;
+            text-align: center;
+            font-size: 10px;
+        }
+
+        .smallText {
+            font-size: 0.8em;
+        }
+
+        .boxClassBelow {
+            width: 0.41%;
+            border: 1px solid black;
+            margin: 0;
+            text-align: center;
+            font-size: 10px;
+        }
+
+        .scale-margin-left {
+            margin-left: 3%;
+            margin-bottom: 10px;
+        }
+
+        .selectedBoxUpper {
+            border: 1px solid red;
+        }
+
+        .selectedBoxLower {
+            border: 1px solid red;
+            background: yellow;
+        }
+
+        .textColor {
+            color: yellowgreen;
+            background-color: yellowgreen;
+        }
+
+        .tblContentX {
+            margin-left: 10px;
+        }
+
+        .navText {
+            margin-right: 10% !important;
+            font-weight: bold;
+        }
+
+        @media only screen and (max-width: 768px) {
+            body {
+                margin-top: 30%;
+            }
+        }
+    </style>
+
+    <script>
+
+
+        $(document).ready(function () {
+            ShowTime();
+            $('#errormsg').hide();
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+
+            $("#sidebar-btn").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+
+        })
+     
+    </script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body ng-controller="IdealCtrl">
+    <nav class="navbar navbar-default  navbar-fixed-top">
+        <div class="container container-fluid">
+            <div class="navbar-header">
+                <span id="sidebar-btn">&#9776;</span>
+                <a href="">
+                    <img class="navLogo" src="img/Logo.png"></a>
+            </div>
+            <div class="navbar-text" id="lblTime"></div>
+            <span class="navbar-text navText">Warren County</span>
+            <span class="navbar-text navText">Thermal Energy Storage Optimizer</span>
+
+            <%-- <div class="text-right">
+                      <span class="text-right" id="headerSiteName">fgfg</span>
+                  </div>--%>
+        </div>
+        <div id="wrapper">
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav" style="margin-left: 0;">
+                    <ul>
+                        <li>
+                            <a href="">
+                                <img class="sideLogo" src="img/Logo.png"></a>
+                        </li>
+                    </ul>
+                    <li class="sidebar-brand">
+
+                        <a href="#menu-toggle" id="menu-toggle" style="margin-top: 20px; float: right;"><i class="fa fa-bars" style="font-size: 20px !Important;" aria-hidden="true" aria-hidden="true"></i></li>
+                    <li>
+                        <a href="Status.aspx"><i class="fa fa-sort-alpha-asc " aria-hidden="true"></i><span style="margin-left: 10px;">Status</span>  </a>
+                    </li>
+                    <li>
+                        <a href="Forecast.aspx"><i class="fa fa-font" aria-hidden="true"></i><span style="margin-left: 10px;">Forecast</span> </a>
+                    </li>
+                    <li>
+                        <a href="OptimizerGoals.aspx"><i class="fa fa-puzzle-piece" aria-hidden="true"></i><span style="margin-left: 10px;">Optimization Goals</span> </a>
+                    </li>
+
+                    <li>
+                        <a href="EquipmentStatus.aspx"><i class="fa fa-puzzle-piece" aria-hidden="true"></i><span style="margin-left: 10px;">Equipment Availability</span> </a>
+                    </li>
+                    <li>
+                        <a href="EquipmentSetting.aspx"><i class="fa fa-play-circle-o " aria-hidden="true"></i><span style="margin-left: 10px;">Optimizer Constraints</span> </a>
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+        <div id="divOverlay" style="height: 100%; width: 100%;">
+        </div>
+    </nav>
+
+    <%--Login Popup--%>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="loginCtrl">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header modal-header-success">
+                    <button type="button" id="btnClose" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h5 class="modal-title" id="myModalLabel">Log in</h5>
+                </div>
+                <!-- /.modal-header -->
+
+                <div class="modal-body">
+                    <form role="form" >
+                        <div class="form-group" >
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="uLogin" placeholder="Login" ng-model="userName" ng-click="start()">
+                                <label for="uLogin" class="input-group-addon glyphicon glyphicon-user"></label>
+                            </div>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="uPassword" placeholder="Password" ng-model="password">
+                                <label for="uPassword" class="input-group-addon glyphicon glyphicon-lock"></label>
+                            </div>
+                            <!-- /.input-group -->
+                        </div>
+                        <!-- /.form-group -->
+                    </form>
+                    <p id="errormsg" style="color: #bf1515">{{$scope.errormsg}}</p>
+                </div>
+
+                <!-- /.modal-body -->
+
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" ng-click="AuthenticateUser()" value="Log in" />
+
+                    <%--      <div class="progress">
+                            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 0%;">
+                                <span class="sr-only">progress</span>
+                            </div>
+                        </div>--%>
+                </div>
+                <!-- /.modal-footer -->
+
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+
+
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+﻿(function () {
+angular.module("seriveModule", [])
+    .service('http', ['$http', function ($http) {
+        //myApp.run(['Idle', function (Idle) {
+        //Idle.watch();
+        //}]);
+
+
+    this.UpdateDashBoard = function () {
+        return $http({
+            method: "POST",
+            url: 'Status.aspx/UpdateDashBoard',
+            data: {}
+        }).success(function (data, responce) {
+        })
+    };
+
+    this.GetTesVariable = function () {
+        return $http({
+            method: "POST",
+            url: 'Status.aspx/GetTesVariable',
+            data: {}
+        }).success(function (data, responce) {
+        })
+    };
+
+
+    //service for forecastVisuals
+    this.GetStatus = function () {
+        return $http({
+            method: "POST",
+            url: 'EquipmentStatus.aspx/GetStatus',
+            data: {}
+        }).success(function (data, responce) {
+        })
+    };
+
+    this.GetAvailabilityVariable = function () {
+        return $http({
+            method: "POST",
+            url: 'EquipmentStatus.aspx/GetAvailabilityVariable',
+            data: {}
+        }).success(function (data, responce) {
+        })
+    };
+
+    this.getChartDataByColumnName = function (isDayAhead, forecastColumn) {
+        return $http({
+            method: "POST",
+            url: 'Forecast.aspx/GetOptimizedTESData',
+            dataType: 'json',
+            data: { isDayAhead: isDayAhead, forecastColumn: forecastColumn },
+            headers: { "Content-Type": "application/json" }
+        }).success(function (data, responce) {
+            //console.log(responce);
+        })
+    };
+
+    this.getHistoricalDataByColumnName = function (isDayAhead, forecastColumn) {
+        return $http({
+            method: "POST",
+            url: 'Forecast.aspx/GetHistoricalTESData',
+            dataType: 'json',
+            data: { isDayAhead: isDayAhead, variable: forecastColumn },
+            headers: { "Content-Type": "application/json" }
+        }).success(function (data, responce) {
+        })
+    };
+
+        /*----------- Services for EquipmentSetting  ----------------  */
+        this.GetStatus = function () {
+            return $http({
+                method: "POST",
+                url: 'EquipmentStatus.aspx/GetStatus',
+                data: {}
+            }).success(function (data, responce) {
+            })
+        };
+
+        this.GetAvailabilityVariable = function () {
+            return $http({
+                method: "POST",
+                url: 'EquipmentStatus.aspx/GetAvailabilityVariable',
+                data: {}
+            }).success(function (data, responce) {
+            })
+        };
+
+        this.GetSettingValue = function () {
+            return $http({
+                method: "POST",
+                url: 'EquipmentSetting.aspx/GetSettingValue',
+                data: {}
+            }).success(function (data, responce) {
+            })
+        };
+
+        this.GetEngineerSettingVariable = function () {
+            return $http({
+                method: "POST",
+                url: 'EquipmentSetting.aspx/GetEngineerSettingVariable',
+                data: {}
+            }).success(function (data, responce) {
+            })
+        };
+    }])
+
+})();
